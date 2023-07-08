@@ -1,53 +1,5 @@
 const inquirer = require("inquirer");
-const Shapes = require("./lib/shapes");
-const fs = require("fs");
-
-// Logo class to initialize everything needed for the svg file
-class Logo {
-  constructor(shape, colour, text, textColour) {
-    this.colour = colour;
-    this.text = text;
-    this.textColour = textColour;
-
-    if (shape === "circle") {
-      this.shape = new Shapes.Circle(this.colour);
-    } else if (shape === "square") {
-      this.shape = new Shapes.Square(this.colour);
-    } else if (shape === "triangle") {
-      this.shape = new Shapes.Triangle(this.colour);
-    } else {
-      throw new Error(`Unsupported shape: ${shape}`);
-    }
-  }
-
-  // Create a string for the <text> element
-  generateTextElement() {
-    let y = "112.5";
-    if (this.shape.shape === "triangle") {
-      y = "140";
-    }
-
-    return `<text x="125" y="${y}" font-size="60" text-anchor="middle" fill="${this.textColour}" stroke="black" stroke-width="1">${this.text}</text>`;
-  }
-
-  // Create a string for the entire file inside the <svg> element
-  createSvgElements() {
-    this.svg = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg"> ${this.shape.generateElement()} ${this.generateTextElement()}</svg>`;
-  }
-
-  // Generate the svg element and write the results to logo.svg
-  createSvgFile() {
-    this.createSvgElements();
-
-    const pathName = "examples/logo.svg";
-    try {
-      fs.writeFileSync(pathName, this.svg);
-      console.log("Successfully generated logo.svg");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-}
+const Logo = require("./lib/logo");
 
 // Function to initalize the app and prompt the user for input
 function init() {

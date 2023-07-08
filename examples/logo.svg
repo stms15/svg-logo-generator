@@ -1,1 +1,1 @@
-<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg"> <circle cx="125" cy="100" r="80" fill="white" stroke="black" stroke-width="1"/> <text x="125" y="112.5" font-size="60" text-anchor="middle" fill="lightblue" stroke="black" stroke-width="1">svg</text></svg>
+<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg"> <polygon points="125,25 225,175 25,175" fill="coral" stroke="black" stroke-width="1"/> <text x="125" y="140" font-size="60" text-anchor="middle" fill="black" stroke="black" stroke-width="1">hey</text></svg>
