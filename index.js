@@ -4,9 +4,10 @@ const fs = require("fs");
 
 // Logo class to initialize everything needed for the svg file
 class Logo {
-  constructor(shape, colour, text) {
+  constructor(shape, colour, text, textColour) {
     this.colour = colour;
     this.text = text;
+    this.textColour = textColour;
 
     if (shape === "circle") {
       this.shape = new Shapes.Circle(this.colour);
@@ -26,11 +27,7 @@ class Logo {
       y = "140";
     }
 
-    let fontSize = "60";
-    if (this.text.length > 6) {
-      fontSize = "40";
-    }
-    return `<text x="125" y="${y}" font-size="${fontSize}" text-anchor="middle" fill="white" stroke="black" stroke-width="1">${this.text}</text>`;
+    return `<text x="125" y="${y}" font-size="60" text-anchor="middle" fill="${this.textColour}" stroke="black" stroke-width="1">${this.text}</text>`;
   }
 
   // Create a string for the entire file inside the <svg> element
@@ -58,26 +55,41 @@ function init() {
     .prompt([
       {
         type: "list",
-        message: "What shape do you want your logo to be?",
+        message: "Choose a shape:",
         choices: ["circle", "square", "triangle"],
         name: "shape",
       },
       {
         type: "input",
-        message:
-          "What colour do you want the background to be? You can list a colour by name or hex code.",
+        message: "Enter a background colour (name or hex code):",
         name: "colour",
       },
       {
         type: "input",
         message:
-          "Do you want to add any text to your logo? If no, just hit enter/submit an empty string.",
+          "Do you want to add any text to your logo? You can enter up to 3 characters.\nIf no, hit enter/submit an empty string.",
         name: "text",
+      },
+      {
+        type: "input",
+        message: "Enter a text colour (name or hex code):",
+        name: "textColour",
       },
     ])
     .then((response) => {
+      // Validate text length
+      if (response.text.length > 3) {
+        throw new Error(
+          "Text length is too long. Maximum of 3 characters allowed."
+        );
+      }
       // Generate svg logo
-      const logo = new Logo(response.shape, response.colour, response.text);
+      const logo = new Logo(
+        response.shape,
+        response.colour,
+        response.text,
+        response.textColour
+      );
       logo.createSvgFile();
     });
 }
